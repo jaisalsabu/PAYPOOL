@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -27,7 +28,10 @@ import java.util.Map;
 
 public class Paypool extends AppCompatActivity {
     Button btf;
+    TextView trey;
     EditText txt1,txt2,txt3;
+    SharedPreferences sharedpre;
+    String payerid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +39,11 @@ public class Paypool extends AppCompatActivity {
         txt1=findViewById(R.id.editText7);//phone number
         txt2=findViewById(R.id.editText8);//details
         txt3=findViewById(R.id.editText9);//amount
+        trey=findViewById(R.id.textView8);
         btf=findViewById(R.id.button3);
+        payerid=sharedpre.getString("name","*****");
+        trey.setText(payerid);
+
         btf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +77,8 @@ public class Paypool extends AppCompatActivity {
                                     //error handling
                                 }
 
-                            }){
+                            } ) {
+
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String,String> params = new HashMap<>();

@@ -64,6 +64,9 @@ public class QRGEN extends AppCompatActivity {
                                         trex.setText(Pid);
                                         myBitmap= QRCode.from(Pid).bitmap();
                                         img.setImageBitmap(myBitmap);
+                                        SharedPreferences.Editor editor = sharedPreference.edit();
+                                        editor.putString("payerid",Pid);
+                                        editor.apply();
                                         Toast.makeText(getApplicationContext(),Pid,Toast.LENGTH_LONG).show();
 
                                     }
