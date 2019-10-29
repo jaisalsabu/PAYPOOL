@@ -41,7 +41,7 @@ public class Paypool extends AppCompatActivity {
         txt3=findViewById(R.id.editText9);//amount
         trey=findViewById(R.id.textView8);
         btf=findViewById(R.id.button3);
-        payerid=sharedpre.getString("name","*****");
+        payerid=sharedpre.getString("payid","*****");
         trey.setText(payerid);
 
         btf.setOnClickListener(new View.OnClickListener() {

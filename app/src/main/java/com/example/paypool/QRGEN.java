@@ -62,11 +62,11 @@ public class QRGEN extends AppCompatActivity {
                                         JSONObject json_obj = jsonArray.getJSONObject(i);
                                         Pid=json_obj.getString("Pid");
                                         trex.setText(Pid);
+                                        SharedPreferences.Editor editor = sharedPreference.edit();
+                                        editor.putString("payid", Pid);
+                                        editor.apply();
                                         myBitmap= QRCode.from(Pid).bitmap();
                                         img.setImageBitmap(myBitmap);
-                                        SharedPreferences.Editor editor = sharedPreference.edit();
-                                        editor.putString("payerid",Pid);
-                                        editor.apply();
                                         Toast.makeText(getApplicationContext(),Pid,Toast.LENGTH_LONG).show();
 
                                     }
