@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -29,10 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QRGEN extends AppCompatActivity {
-    Button btc;
+    Button btc,bth;
     ImageView img;
     Bitmap myBitmap;
-    Intent Intent;
+    TextView trex;
     String name,Pid;
     SharedPreferences sharedPreference;
 
@@ -42,6 +43,8 @@ public class QRGEN extends AppCompatActivity {
         setContentView(R.layout.activity_qrgen);
         sharedPreference = getSharedPreferences("asd", MODE_PRIVATE);
         btc=findViewById(R.id.button7);
+        trex=findViewById(R.id.textView7);
+        bth=findViewById(R.id.button12);
         img=findViewById(R.id.imageView);
         name=sharedPreference.getString("name","*****");
         btc.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +61,7 @@ public class QRGEN extends AppCompatActivity {
                                     for(int i=0;i<jsonArray.length();i++){
                                         JSONObject json_obj = jsonArray.getJSONObject(i);
                                         Pid=json_obj.getString("Pid");
+                                        trex.setText(Pid);
                                         myBitmap= QRCode.from(Pid).bitmap();
                                         img.setImageBitmap(myBitmap);
                                         Toast.makeText(getApplicationContext(),Pid,Toast.LENGTH_LONG).show();
@@ -87,14 +91,21 @@ public class QRGEN extends AppCompatActivity {
                         return params;
                     }
                 };
-                Intent iso=new Intent(getApplicationContext(),Selector.class);
-                startActivity(iso);
+
                 //Adding the string request to the queue
                 RequestQueue requestQueue = Volley.newRequestQueue(QRGEN.this);
                 requestQueue.add(stringRequest);
             }
 
 
+        });
+        bth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iso=new Intent(getApplicationContext(),Selector.class);
+                startActivity(iso);
+
+            }
         });
 
     }
