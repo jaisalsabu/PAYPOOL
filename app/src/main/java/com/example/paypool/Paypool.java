@@ -120,77 +120,54 @@ public class Paypool extends AppCompatActivity {
             }
         });
     }
+
     public void startPayment() {
         /**
-         * Instantiate Checkout
-         */
-        Checkout checkout = new Checkout();
-
-        /**
-         * Set your logo here
-         */
-        // checkout.setImage(R.drawable.logo);
-
-        /**
-         * Reference to current activity
+         * You need to pass current activity in order to let Razorpay create CheckoutActivity
          */
         final Activity activity = this;
 
-        /**
-         * Pass your payment options to the Razorpay Checkout as a JSONObject
-         */
+        final Checkout co = new Checkout();
+
         try {
             JSONObject options = new JSONObject();
-
-            /**
-             * Merchant Name
-             * eg: ACME Corp || HasGeek etc.
-             */
-            options.put("name", "Merchant Name");
-
-            /**
-             * Description can be anything
-             * eg: Reference No. #123123 - This order number is passed by you for your internal reference. This is not the `razorpay_order_id`.
-             *     Invoice Payment
-             *     etc.
-             */
-            options.put("description", "Reference No. #123456");
-            // options.put("order_id", "order_9A33XWu170gUtm");
+            options.put("name", "Razorpay Corp");
+            options.put("description", "Demoing Charges");
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "https://rzp-mobile.s3.amazonaws.com/images/rzp.png");
             options.put("currency", "INR");
 
-            /**
-             * Amount is always passed in currency subunits
-             * Eg: "500" = INR 5.00
-             */
-            options.put("amount", Integer.parseInt(txt1.getText().toString())*100);
+            String payment = editTextPayment.getText().toString();
 
-            checkout.open(activity, options);
-        } catch(Exception e) {
-            // Log.e(TAG, "Error in starting Razorpay Checkout", e);
+            double total = Double.parseDouble(payment);
+            total = total * 100;
+            options.put("amount", total);
+
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", "sikander@gkmit.co");
+            preFill.put("contact", "9680224241");
+
+            options.put("prefill", preFill);
+
+            co.open(activity, options);
+        } catch (Exception e) {
+            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
-    public void onPaymentSuccess(String s) {
-        Toast.makeText(Paypool.this,"PAYMENT SUCCESFULL",Toast.LENGTH_LONG).show();
+
+    @Override
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        Toast.makeText(this, "Payment successfully done! " + razorpayPaymentID, Toast.LENGTH_SHORT).show();
+
     }
 
-
-    public void onPaymentError(int i, String s) {
-        Toast.makeText(Paypool.this, "PAYMENT UNSUCCESFULL", Toast.LENGTH_LONG).show();
-    }
-
-        @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
-            } else {
-                recid =result.getContents();
-                txt11.setText(result.getContents());
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+    @Override
+    public void onPaymentError(int code, String response) {
+        try {
+            Toast.makeText(this, "Payment error please try again", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("OnPaymentError", "Exception in onPaymentError", e);
         }
-
     }
 }
