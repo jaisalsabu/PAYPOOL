@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="109dp"
         android:ems="10"
-        android:textColorHint="#000000"
         android:hint="Amount"
         android:inputType="number"
+        android:textColorHint="#000000"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -37,12 +37,11 @@
         android:id="@+id/button3"
         android:layout_width="145dp"
         android:layout_height="59dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="56dp"
         android:background="@drawable/circle"
         android:text="PAY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -92,6 +91,20 @@
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/editText9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.807"
+        app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="29dp"
+        android:text="SCAN"
+        android:background="@drawable/circle"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,13 +33,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Paypool extends AppCompatActivity {
-    Button btf;
+    Button btf,bth;
     TextView trey,txt11;
     EditText txt1, txt2, txt3;
-    SharedPreferences sharedpre;
-    //String payerid;
-    //String recid;
     IntentIntegrator qrscan;
+    SharedPreferences sharedPreferences;
+    String pyrid,recid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +51,17 @@ public class Paypool extends AppCompatActivity {
         trey = findViewById(R.id.textView8);
         txt11=findViewById(R.id.textView9);
         btf = findViewById(R.id.button3);
+        bth = findViewById(R.id.button8);
         qrscan = new IntentIntegrator(this);
-    //    payerid = sharedpre.getString("payid", "*****");
-      //  trey.setText(payerid);
-
+        sharedPreferences = getSharedPreferences("asd", MODE_PRIVATE);
+        pyrid = sharedPreferences.getString("payerid", "****");
+        trey.setText(pyrid);
+        bth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qrscan.initiateScan();
+            }
+        });
         btf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +72,7 @@ public class Paypool extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
 //If we are getting success from server
-                                    qrscan.initiateScan();
+                                    startPayment();
                                     try {
                                         JSONArray jsonArray = new JSONArray(response);
                                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -93,6 +100,8 @@ public class Paypool extends AppCompatActivity {
 
                             params.put("amount", txt3.getText().toString());
                             params.put("details", txt2.getText().toString());
+                            params.put("payerid", pyrid);
+                            params.put("reciverid", recid);
                            // params.put("payerid",payerid);
                             //params.put("recid",recid);
 
@@ -111,6 +120,63 @@ public class Paypool extends AppCompatActivity {
             }
         });
     }
+    public void startPayment() {
+        /**
+         * Instantiate Checkout
+         */
+        Checkout checkout = new Checkout();
+
+        /**
+         * Set your logo here
+         */
+        // checkout.setImage(R.drawable.logo);
+
+        /**
+         * Reference to current activity
+         */
+        final Activity activity = this;
+
+        /**
+         * Pass your payment options to the Razorpay Checkout as a JSONObject
+         */
+        try {
+            JSONObject options = new JSONObject();
+
+            /**
+             * Merchant Name
+             * eg: ACME Corp || HasGeek etc.
+             */
+            options.put("name", "Merchant Name");
+
+            /**
+             * Description can be anything
+             * eg: Reference No. #123123 - This order number is passed by you for your internal reference. This is not the `razorpay_order_id`.
+             *     Invoice Payment
+             *     etc.
+             */
+            options.put("description", "Reference No. #123456");
+            // options.put("order_id", "order_9A33XWu170gUtm");
+            options.put("currency", "INR");
+
+            /**
+             * Amount is always passed in currency subunits
+             * Eg: "500" = INR 5.00
+             */
+            options.put("amount", Integer.parseInt(txt1.getText().toString())*100);
+
+            checkout.open(activity, options);
+        } catch(Exception e) {
+            // Log.e(TAG, "Error in starting Razorpay Checkout", e);
+        }
+    }
+    public void onPaymentSuccess(String s) {
+        Toast.makeText(Paypool.this,"PAYMENT SUCCESFULL",Toast.LENGTH_LONG).show();
+    }
+
+
+    public void onPaymentError(int i, String s) {
+        Toast.makeText(Paypool.this, "PAYMENT UNSUCCESFULL", Toast.LENGTH_LONG).show();
+    }
 
         @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -119,8 +185,8 @@ public class Paypool extends AppCompatActivity {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
             } else {
+                recid =result.getContents();
                 txt11.setText(result.getContents());
-                //recid = txt11.getText().toString();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
