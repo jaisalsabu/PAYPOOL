@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +31,14 @@ import java.util.Map;
 public class RECIVEPOOL extends AppCompatActivity {
     Button bte;
     String payerid;
+    ImageView qr;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recivepool);
+        qr=findViewById(R.id.imageView2);
         bte = findViewById(R.id.button9);
         bte.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +49,8 @@ public class RECIVEPOOL extends AppCompatActivity {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-//If we are getting success from server
 
+//If we are getting success from server
                                     Toast.makeText(RECIVEPOOL.this, response, Toast.LENGTH_LONG).show();
                                     Intent ias = new Intent(getApplicationContext(), QRGEN.class);
                                     startActivity(ias);

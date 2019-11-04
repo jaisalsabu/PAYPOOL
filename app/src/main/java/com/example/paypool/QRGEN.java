@@ -123,10 +123,10 @@ public class QRGEN extends AppCompatActivity {
             String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString();
             File myDir = new File(root + "/saved_images_1");
             myDir.mkdirs();
-            Random generator = new Random();
-            int n = 10000;
-            n = generator.nextInt(n);
-            String fname = "Image-" + n + ".jpg";
+            //Random generator = new Random();
+            //int n = 10000;
+            //n = generator.nextInt(n);
+            String fname = "Imageqr.jpg";
             File file = new File(myDir, fname);
             if (file.exists())
                 file.delete();

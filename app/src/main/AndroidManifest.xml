@@ -27,10 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_C5Ni08055bXzuk"
+            />
     </application>
-    <meta-data
-        android:name="com.razorpay.ApiKey"
-        android:value="rzp_test_C5Ni08055bXzuk"
-        />
+
 
 </manifest>
