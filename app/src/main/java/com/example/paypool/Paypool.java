@@ -32,7 +32,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Paypool extends AppCompatActivity {
+public class Paypool extends AppCompatActivity implements PaymentResultListener {
     Button btf,bth;
     TextView trey,txt11;
     EditText txt1, txt2, txt3;
