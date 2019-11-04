@@ -11,8 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/paypoollogo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".QRSCAN"></activity>
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".RECIVEPOOL" />
         <activity android:name=".QRGEN" />
         <activity android:name=".Selector" />
@@ -27,5 +26,9 @@
             </intent-filter>
         </activity>
     </application>
+    <meta-data
+        android:name="com.razorpay.ApiKey"
+        android:value="rzp_test_C5Ni08055bXzuk"
+        />
 
 </manifest>

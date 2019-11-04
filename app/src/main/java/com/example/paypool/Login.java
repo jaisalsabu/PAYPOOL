@@ -43,14 +43,22 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 if (!(a5.getText().toString().isEmpty() || a6.getText().toString().isEmpty()))
                 {
-
-
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST,"to be addded",
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST,"https://intown-film.000webhostapp.com/Paypool/paypoollog.php",
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                 //If we are getting success from server
                                     Toast.makeText(Login.this, response, Toast.LENGTH_LONG).show();
+                                    if(response.equals("success")) {
+                                        //If we are getting success from server
+
+                                        Intent ibe= new Intent(getApplicationContext(),Selector.class);
+                                        startActivity(ibe);
+
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(Login.this,"invalid",Toast.LENGTH_LONG).show();
+                                    }
                                     try {
                                         JSONArray jsonArray=new JSONArray(response);
                                         for(int i=0;i<jsonArray.length();i++){
@@ -75,15 +83,13 @@ public class Login extends AppCompatActivity {
                             Map<String,String> params = new HashMap<>();
                           //Adding parameters to request
 
-                            params.put("name",a5.getText().toString());
-                            params.put("password",a6.getText().toString());
+                            params.put("nameo",a5.getText().toString());
+                            params.put("passwordo",a6.getText().toString());
 
                           //returning parameter
                             return params;
                         }
                     };
-                    Intent iso=new Intent(getApplicationContext(),Selector.class);
-                    startActivity(iso);
                          //Adding the string request to the queue
                     RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
                     requestQueue.add(stringRequest);
@@ -98,13 +104,7 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-        bto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ibe= new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(ibe);
-            }
-        });
+
     }
 }
 

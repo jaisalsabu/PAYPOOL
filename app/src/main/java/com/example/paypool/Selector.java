@@ -20,8 +20,8 @@ public class Selector extends AppCompatActivity {
         bta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent ibs=new Intent(getApplicationContext(),Paypool.class);
-                startActivity(ibs);
+                Intent izs=new Intent(getApplicationContext(),Paypool.class);
+                startActivity(izs);
 
             }
         });
