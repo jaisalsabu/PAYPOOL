@@ -68,13 +68,13 @@ public class Paypool extends AppCompatActivity {
         btf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(txt3.getText().toString().isEmpty()/* && (Integer.parseInt(txt3.getText().toString())>Integer.parseInt(balance))*/) {
-                    Toast.makeText(getApplicationContext(),"incorrect amount entered",Toast.LENGTH_LONG).show();
+                if(!txt3.getText().toString().isEmpty() && (Integer.parseInt(txt3.getText().toString())<Integer.parseInt(balance))) {
+                    Intent irr = new Intent(getApplicationContext(), confirmpay.class);
+                    startActivity(irr);
                 }
                 else
                     {
-                        Intent irr = new Intent(getApplicationContext(), confirmpay.class);
-                        startActivity(irr);
+                        Toast.makeText(getApplicationContext(),"INSUFFICIENT BALANCE",Toast.LENGTH_LONG).show();
                     }
             }
         });
