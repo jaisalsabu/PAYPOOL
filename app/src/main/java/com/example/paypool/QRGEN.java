@@ -34,14 +34,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class QRGEN extends AppCompatActivity {
     Button btc,bth;
     ImageView img;
     Bitmap myBitmap;
     TextView trex;
-    String name,Pid;
+    String name,Pide;
     SharedPreferences sharedPreference;
 
     @Override
@@ -67,14 +66,14 @@ public class QRGEN extends AppCompatActivity {
                                     JSONArray jsonArray = new JSONArray(response);
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject json_obj = jsonArray.getJSONObject(i);
-                                        Pid = json_obj.getString("Pid");
-                                        trex.setText(Pid);
+                                        Pide = json_obj.getString("Pid");
+                                        trex.setText(Pide);
                                         SharedPreferences.Editor editor = sharedPreference.edit();
-                                        editor.putString("payid", Pid);
+                                        editor.putString("payid", Pide);
                                         editor.apply();
-                                        myBitmap = QRCode.from(Pid).bitmap();
+                                        myBitmap = QRCode.from(Pide).bitmap();
                                         img.setImageBitmap(myBitmap);
-                                        Toast.makeText(getApplicationContext(), Pid, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), Pide, Toast.LENGTH_LONG).show();
                                         saveImageToExternalStorage(myBitmap);
 
                                     }

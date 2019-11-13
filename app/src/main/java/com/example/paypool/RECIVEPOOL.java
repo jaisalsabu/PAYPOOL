@@ -2,12 +2,10 @@ package com.example.paypool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,35 +27,36 @@ import java.util.Map;
 
 public class RECIVEPOOL extends AppCompatActivity {
     Button bte;
-    String payerid;
-    ImageView qr;
-
+    String recrid;
+    TextView trexe;
+    String balance;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recivepool);
-        qr=findViewById(R.id.imageView2);
         bte = findViewById(R.id.button9);
+        trexe=findViewById(R.id.textView19);
+        sharedPreferences = getSharedPreferences("asd", MODE_PRIVATE);
+        recrid = sharedPreferences.getString("payeride", "****");
         bte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 {
                     //storing values to database
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, "addurl",
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://intown-film.000webhostapp.com/Paypool/balretrival.php",
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-
-//If we are getting success from server
+                                    //If we are getting success from server
                                     Toast.makeText(RECIVEPOOL.this, response, Toast.LENGTH_LONG).show();
-                                    Intent ias = new Intent(getApplicationContext(), QRGEN.class);
-                                    startActivity(ias);
-
                                     try {
                                         JSONArray jsonArray = new JSONArray(response);
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             JSONObject json_obj = jsonArray.getJSONObject(i);
+                                            balance = json_obj.getString("wallbal");
+                                            trexe.setText(balance);
 
                                         }
                                     } catch (JSONException e) {
@@ -79,22 +77,21 @@ public class RECIVEPOOL extends AppCompatActivity {
                             Map<String, String> params = new HashMap<>();
                             //Adding parameters to request
 
-                            params.put("payid", payerid);
+                            params.put("id", recrid);
 
                             //returning parameter
                             return params;
                         }
                     };
 
-
                     //Adding the string request to the queue
                     RequestQueue requestQueue = Volley.newRequestQueue(RECIVEPOOL.this);
                     requestQueue.add(stringRequest);
 
                 }
+
             }
+
+
         });
-    }
-
-
-    }
+    }}
